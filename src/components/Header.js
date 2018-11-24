@@ -31,9 +31,9 @@ const styles = StyleSheet.create({
         shadowOpacity: 0.7,
     },
     banner: {
-        fontSize: 28,
-        color: 'red',
-        fontFamily: 'Roboto'
+        fontSize: 32,
+        color: 'darkslategrey',
+        fontFamily: 'system font'
     }
 });
 

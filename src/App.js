@@ -1,12 +1,19 @@
 //import liraries
 import React, { Component } from 'react';
-import { View, Text, StyleSheet } from 'react-native';
-import Header from './components/Header';
 import firebase from 'firebase';
 import config from '../config';
+import { View, Text, StyleSheet } from 'react-native';
+import Header from './components/Header';
+import LoginForm from './components/LoginForm';
+
 
 // create a component
 class App extends Component {
+
+    state = {
+        username: '',
+        password: ''
+    }
 
     componentWillMount() {
         firebase.initializeApp(config);
@@ -16,8 +23,8 @@ class App extends Component {
         return (
             <View style={styles.container}>
                 <Header text="AUTH"/>
-                <View style={styles.body}>                
-                    <Text>An App</Text>
+                <View style={styles.body}>
+                    <LoginForm />
                 </View>
             </View>
         );
@@ -34,10 +41,10 @@ const styles = StyleSheet.create({
         backgroundColor: '#2c3e50',
     },
     body: {
-        flex: 12,
+        flex: 17,
         width: '100%',
         alignItems: 'center',
-        justifyContent: 'center',
+        justifyContent: 'flex-start',
         backgroundColor: 'pink'
     }
 });

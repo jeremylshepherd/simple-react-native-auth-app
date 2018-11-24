@@ -4,15 +4,15 @@ import { Text, StyleSheet, TouchableOpacity, View } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 
 // create a component
-const Button = props => (
-    <TouchableOpacity onPress={props.onPress} style={styles.container}>
+const Button = ({ onPress, containerStyle, buttonTextStyle, buttonText, iconColor, iconName, iconSize}) => (
+    <TouchableOpacity onPress={onPress} style={{...styles.container, ...containerStyle}}>
         <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}> 
-            <Text style={props.buttonTextStyle}>{props.buttonText}</Text>
-            {props.iconName !== undefined 
+            <Text style={buttonTextStyle}>{buttonText}</Text>
+            {iconName !== undefined 
                 ? <Icon 
-                    name={props.iconName} 
-                    size={props.iconSize} 
-                    color={props.iconColor} 
+                    name={iconName} 
+                    size={iconSize} 
+                    color={iconColor} 
                 />
                 : null
             }
@@ -27,12 +27,8 @@ const styles = StyleSheet.create({
         padding: 20,
         justifyContent: 'center',
         alignItems: 'center',
-        borderColor: 'cornflowerblue',
         borderWidth: 1,
         borderRadius: 5,        
-    },
-    text: {
-        color: 'cornflowerblue',
     }
 });
 
