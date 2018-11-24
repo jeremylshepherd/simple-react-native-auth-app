@@ -18,7 +18,9 @@ const Header = props => (
 // define your styles
 const styles = StyleSheet.create({
     container: {
+        flex: 1,
         flexDirection: 'row',
+        width: '100%',
         justifyContent: 'center',
         alignItems: 'center',
         backgroundColor: '#ecf0f1',
@@ -31,8 +33,7 @@ const styles = StyleSheet.create({
     banner: {
         fontSize: 28,
         color: 'red',
-        textShadowColor: 'black',
-        textShadowOffset: { width: 10, height: 10 },
+        fontFamily: 'Roboto'
     }
 });
 
