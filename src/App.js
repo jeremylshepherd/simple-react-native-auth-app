@@ -2,21 +2,46 @@
 import React, { Component } from 'react';
 import firebase from 'firebase';
 import config from '../config';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, StyleSheet } from 'react-native';
 import Header from './components/Header';
 import LoginForm from './components/LoginForm';
+import Spinner from './components/Spinner';
+import UserForm from './components/UserForm';
+import { bg } from './commonStyles';
 
 
 // create a component
-class App extends Component {
-
+class App extends Component {    
+    
     state = {
-        username: '',
-        password: ''
+        auth: null,
+        email: null
     }
 
     componentWillMount() {
         firebase.initializeApp(config);
+        firebase.auth().onAuthStateChanged((user) => {
+            if(user) {
+                this.setState({ auth: true, email: user.email })
+            } else {
+                this.setState({ auth: false, email: null})
+            }            
+        });
+    }
+
+    renderBody = () => {
+        switch(this.state.auth) {
+            case true:
+                return  <UserForm email={this.state.email} logout={this.logout} />
+            case false: 
+                return <LoginForm />
+            default:
+            return <View style={styles.spinner}><Spinner /></View>
+        }
+    }
+
+    logout = () => {
+        firebase.auth().signOut();
     }
 
     render() {
@@ -24,12 +49,13 @@ class App extends Component {
             <View style={styles.container}>
                 <Header text="AUTH"/>
                 <View style={styles.body}>
-                    <LoginForm />
+                    {this.renderBody()}
                 </View>
             </View>
         );
     }
 }
+
 
 // define your styles
 const styles = StyleSheet.create({
@@ -38,15 +64,29 @@ const styles = StyleSheet.create({
         width: '100%',
         justifyContent: 'space-between',
         alignItems: 'center',
-        backgroundColor: '#2c3e50',
+    },
+    cardContainer: {
+        flex: 1,
+        width: '100%',
+        justifyContent: 'flex-start',
+        backgroundColor: bg,
+        marginRight: 15,
+        marginLeft: 15
+    },
+    spinner: { 
+        flex: 1,
+        width: '100%',
+        alignItems: 'center', 
+        justifyContent: 'center',
+        backgroundColor: bg
     },
     body: {
         flex: 17,
         width: '100%',
         alignItems: 'center',
         justifyContent: 'flex-start',
-        backgroundColor: 'pink'
-    }
+        backgroundColor: bg
+    },
 });
 
 //make this component available to the app

@@ -5,13 +5,59 @@ import Card from './Card';
 import CardSection from './CardSection';
 import Button from './Button';
 import FormInput from './FormInput';
+import Spinner from './Spinner'
+import firebase from 'firebase';
 
 // create a component
 class LoginForm extends Component {
     
     state = {
         email: '',
-        password: ''
+        password: '',
+        error: '',
+        loading: false,
+    }
+
+    submitLogin = () => {
+        const { email, password } = this.state;
+
+        this.setState({ error: '', loading: true });
+        firebase.auth().signInWithEmailAndPassword(email, password)
+            .then(res => this.onSuccess())
+            .catch(() => {
+                firebase.auth().createUserWithEmailAndPassword(email, password)
+                    .then(res => this.onSuccess())
+                    .catch(() => this.onFail('Authentication Failed'));
+            })
+    }
+
+    onSuccess = () => {
+        this.setState({
+            loading: false,
+            email: '',
+            password: ''
+        });
+    }
+
+    onFail = (e) => {
+        this.setState({
+            loading: false,
+            error: e
+        });
+    }
+
+    showSpinner = () => {
+        return this.state.loading
+        ? <Spinner />
+        : <Button
+            buttonText="LOG IN"
+            buttonTextStyle={styles.buttonText}
+            containerStyle={styles.button}
+            iconName="sign-in-alt"
+            iconSize={22}
+            iconColor="darkslategrey"
+            onPress={this.submitLogin}
+        />
     }
 
     render() {
@@ -20,7 +66,7 @@ class LoginForm extends Component {
                 <Card>
                     <CardSection>
                         <FormInput 
-                            value={this.state.username}
+                            value={this.state.email}
                             label="Email"
                             inputStyle={styles.label}
                             labelStyle={styles.label}
@@ -42,15 +88,10 @@ class LoginForm extends Component {
                         />
                     </CardSection>
                     <CardSection>
-                        <Button
-                            buttonText="LOG IN"
-                            buttonTextStyle={styles.buttonText}
-                            containerStyle={styles.button}
-                            iconName="sign-in-alt"
-                            iconSize={22}
-                        />
-                    </CardSection>
+                        { this.showSpinner() }
+                    </CardSection>                    
                 </Card>
+                <Text style={styles.error}>{this.state.error}</Text>
             </View>
         );
     }
@@ -77,6 +118,12 @@ const styles = StyleSheet.create({
         fontSize: 18,
         marginRight: 10,
         color: 'darkslategrey'
+    },
+    error: {
+        fontSize: 24,
+        color: 'maroon',
+        fontWeight: 'bold',
+        textAlign: 'center'
     }
 });
 
