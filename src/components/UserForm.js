@@ -1,9 +1,7 @@
 //import liraries
 import React, { Component } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
-import Card from './Card';
-import CardSection from './CardSection';
-import Button from './Button';
+import { Card , CardSection, Button } from './Elements';
 
 const bg = 'lightslategrey';
 const color = 'darkslategrey';

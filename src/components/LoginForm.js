@@ -1,11 +1,7 @@
 //import liraries
 import React, { Component } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
-import Card from './Card';
-import CardSection from './CardSection';
-import Button from './Button';
-import FormInput from './FormInput';
-import Spinner from './Spinner'
+import {Card, CardSection, Button, FormInput, Spinner} from './Elements'
 import firebase from 'firebase';
 
 // create a component

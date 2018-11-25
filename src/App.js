@@ -3,9 +3,8 @@ import React, { Component } from 'react';
 import firebase from 'firebase';
 import config from '../config';
 import { View, StyleSheet } from 'react-native';
-import Header from './components/Header';
+import { Header, Spinner } from './components/Elements';
 import LoginForm from './components/LoginForm';
-import Spinner from './components/Spinner';
 import UserForm from './components/UserForm';
 import { bg } from './commonStyles';
 
